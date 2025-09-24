@@ -856,6 +856,41 @@ EMSCRIPTEN_BINDINGS(ObUtils_Bind) {
         ;
 }
 
+EMSCRIPTEN_BINDINGS(OBFFConstraints_Bind) {
+        class_<OBFFConstraints>("OBFFConstraints")
+                .constructor<>()
+                .function("Clear", &OBFFConstraints::Clear)
+                .function("GetConstraintEnergy", &OBFFConstraints::GetConstraintEnergy)
+                .function("GetGradient", &OBFFConstraints::GetGradient)
+                .function("Setup", &OBFFConstraints::Setup)
+                .function("SetFactor", &OBFFConstraints::SetFactor)
+                .function("AddIgnore", &OBFFConstraints::AddIgnore)
+                .function("AddAtomConstraint", &OBFFConstraints::AddAtomConstraint)
+                .function("AddAtomXConstraint", &OBFFConstraints::AddAtomXConstraint)
+                .function("AddAtomYConstraint", &OBFFConstraints::AddAtomYConstraint)
+                .function("AddAtomZConstraint", &OBFFConstraints::AddAtomZConstraint)
+                .function("AddDistanceConstraint", &OBFFConstraints::AddDistanceConstraint)
+                .function("AddAngleConstraint", &OBFFConstraints::AddAngleConstraint)
+                .function("AddTorsionConstraint", &OBFFConstraints::AddTorsionConstraint)
+                .function("DeleteConstraint", &OBFFConstraints::DeleteConstraint)
+                .function("GetFactor", &OBFFConstraints::GetFactor)
+                .function("Size", &OBFFConstraints::Size)
+                .function("GetConstraintType", &OBFFConstraints::GetConstraintType)
+                .function("GetConstraintValue", &OBFFConstraints::GetConstraintValue)
+                .function("GetConstraintAtomA", &OBFFConstraints::GetConstraintAtomA)
+                .function("GetConstraintAtomB", &OBFFConstraints::GetConstraintAtomB)
+                .function("GetConstraintAtomC", &OBFFConstraints::GetConstraintAtomC)
+                .function("GetConstraintAtomD", &OBFFConstraints::GetConstraintAtomD)
+                .function("IsIgnored", &OBFFConstraints::IsIgnored)
+                .function("IsFixed", &OBFFConstraints::IsFixed)
+                .function("IsXFixed", &OBFFConstraints::IsXFixed)
+                .function("IsYFixed", &OBFFConstraints::IsYFixed)
+                .function("IsZFixed", &OBFFConstraints::IsZFixed)
+                .function("GetIgnoredBitVec", &OBFFConstraints::GetIgnoredBitVec)
+                .function("GetFixedBitVec", &OBFFConstraints::GetFixedBitVec)
+        ;
+}
+
 EMSCRIPTEN_BINDINGS(OBForceField_Bind) {	
     class_<OBForceField, base<OBPlugin>>("OBForceField")        
     	//.constructor<>()
@@ -863,6 +898,7 @@ EMSCRIPTEN_BINDINGS(OBForceField_Bind) {
 		.function("GetUnit", &OBForceField::GetUnit)
 		.function("HasAnalyticalGradients", &OBForceField::HasAnalyticalGradients)
 		.function("Setup", select_overload<bool(OBMol&)>(&OBForceField::Setup))
+        .function("SetupWithConstraints", select_overload<bool(OBMol&, OBFFConstraints&)>(&OBForceField::Setup))
 		.function("IsSetupNeeded", &OBForceField::IsSetupNeeded)
 		.function("GetAtomTypes", &OBForceField::GetAtomTypes)
 		.function("GetPartialCharges", &OBForceField::GetPartialCharges)
